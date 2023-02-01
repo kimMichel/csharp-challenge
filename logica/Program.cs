@@ -4,41 +4,86 @@
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("===============================");
-            Console.WriteLine("=Bem vindo ao sistema=");
-            Console.WriteLine("===============================");
+            Console.WriteLine("==========Seja Bem vindo ao Sistema==========");
 
-            Console.WriteLine("Insira o nome do investidor:");
-            string? clientName = Console.ReadLine();
-            Console.WriteLine("Qual o valor que deseja depositar?");
-            double saldo = Convert.ToDouble(Console.ReadLine());
+            string? option = "";
 
-            Console.WriteLine("Deseja sacar? Sim(1) ou Não(2)");
-            int userAction = Convert.ToInt16(Console.ReadLine());
+            List<string[]> clientDb = new List<string[]>();
 
-            double valorDoSaque = 0;
+            decimal balance = 0;
+
             do
             {
-                valorDoSaque = 0;
-                switch (userAction)
+                Console.WriteLine("O que deseja fazer?");
+                Console.WriteLine("1 - Cadastrar o cliente");
+                Console.WriteLine("2 - Ver conta corrente");
+                Console.WriteLine("3 - Fazer credito em conta");
+                Console.WriteLine("4 - Fazer debito em conta");
+                Console.WriteLine("5 - Sair do sistema");
+                option = Console.ReadLine();
+
+                switch (option)
                 {
-                    case 1:
-                        Console.WriteLine("Qual o valor que deseja sacar?");
-                        valorDoSaque += Convert.ToDouble(Console.ReadLine());
+                    case "1":
+                        Console.Clear();
+                        registerClient(clientDb);
                         break;
-                    case 2:
+                    case "2":
+                        Console.Clear();
+                        showBalance(balance);
                         break;
+                    case "3":
+                        Console.Clear();
+                        depositOnAccount(balance);
+                        break;
+                    case "4":
+                        Console.Clear();
+                        withdrawFromAccount(balance);
+                        break;
+
                 }
 
-                if (valorDoSaque > saldo)
-                {
-                    Console.WriteLine("O valor do saque é maior que o seu saldo.");
-                }
-            } while (valorDoSaque > saldo);
+            } while (option != "5");
+        
 
-            Console.WriteLine($"O valor sacado foi R$ {valorDoSaque} e o seu saldo é de R$ {saldo - valorDoSaque}");
+            Console.WriteLine("=============Encerrando o sistema=============");
+        }
 
-            Console.WriteLine("===============[Finalizando o sistema]================");
+        static void registerClient(List<string[]> clientDb )
+        {
+            string[] client = new string[4];
+            client[0] = Guid.NewGuid().ToString();
+
+            Console.Clear();
+            Console.WriteLine("Digite o nome do cliente:");
+            string? name = Console.ReadLine();
+            Console.WriteLine("Digite o telefone do cliente:");
+            string? phoneNumber = Console.ReadLine();
+            Console.WriteLine("Digite o email do cliente:");
+            string? email = Console.ReadLine();
+            // Operador ternário
+            client[1] = name != null ? name : ""; 
+            client[2] = phoneNumber != null ? phoneNumber : "";
+            client[3] = email != null ? email : "";
+
+            clientDb.Add(client);
+        }
+
+        static void showBalance(decimal balance)
+        {
+            Console.WriteLine($"O saldo da sua conta corrente é de R$ {balance}");
+            Thread.Sleep(3000);
+            Console.Clear();
+        }
+
+        static void depositOnAccount(decimal balance)
+        {
+            // Code to deposit
+        }
+
+        static void withdrawFromAccount(decimal balance)
+        {
+            // Code to withdraw
         }
     }
 }
